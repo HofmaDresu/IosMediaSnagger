@@ -41,6 +41,25 @@ namespace MediaSnagger
                 }
 
                 NSError error;
+                var destPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                foreach (var fileNameAndPath in soundFiles)
+                {
+                    var src = $"{soundDirectory}/{fileNameAndPath}";
+                    var fileName = fileNameAndPath;
+                    if (fileNameAndPath.Contains('/'))
+                    {
+                        fileName = fileNameAndPath.Split('/').Last();
+                    }
+
+                    var dst = $"{destPath}/{fileName}";
+
+
+                    fileManager.Copy(src, dst, out error);
+                    if (error != null)
+                    {
+                        throw new Exception(error.Description);
+                    }
+                }
             }
         }
 
