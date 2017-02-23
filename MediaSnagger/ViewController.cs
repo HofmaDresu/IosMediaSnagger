@@ -1,6 +1,7 @@
 ﻿using Foundation;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UIKit;
 
 namespace MediaSnagger
@@ -21,7 +22,8 @@ namespace MediaSnagger
         private void LoadAudioFileList()
         {
             var soundDirectory = "/System/Library/Audio/UISounds";
-            var soundFiles = new List<string> { "Bloom.caf", "Calypso.caf", "Choo_Choo.caf", "Fanfare.caf", "Ladder.caf", "Noir.caf", "Sherwood_Forest.caf", "Telegraph.caf", "Tiptoes.caf" };
+            var specificDesiredNames = new List<string> { "Bloom.caf", "Calypso.caf", "Choo_Choo.caf", "Fanfare.caf", "Ladder.caf", "Noir.caf", "Sherwood_Forest.caf", "Telegraph.caf", "Tiptoes.caf" };
+            var soundFiles = new List<string>();
 
             using (var fileManager = new NSFileManager())
             {
@@ -31,24 +33,14 @@ namespace MediaSnagger
                 {
                     var item = enumerator.NextObject();
                     if (item == null) break;
-                    var itemNameAndDirectory = item.ToString().Split('/');
-                    var itemName = "";
-                    if (itemNameAndDirectory.Length <2)
+                    var itemName = item.ToString();
+                    if ((itemName.Contains("sms") && !itemName.Contains("received")) || specificDesiredNames.Any(n => itemName.Contains(n)))
                     {
-                        itemName = itemNameAndDirectory[0];
-                    }
-                    else
-                    {
-                        itemName = itemNameAndDirectory[itemNameAndDirectory.Length - 1];
-                    }
-                    if (itemName.StartsWith("sms"))
-                    {
-                        soundFiles.Add(item.ToString());
+                        soundFiles.Add(itemName);
                     }
                 }
 
                 NSError error;
-                //fileManager.Copy(soundDirectory, "./", out error);
             }
         }
 
