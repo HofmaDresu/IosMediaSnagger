@@ -57,10 +57,19 @@ namespace MediaSnagger
                     fileManager.Copy(src, dst, out error);
                     if (error != null)
                     {
-                        throw new Exception(error.Description);
+                        Console.WriteLine(error.Description);
                     }
                 }
             }
+
+            Console.WriteLine("***************** DONE *******************");
+            Console.WriteLine("***************** DONE *******************");
+            Console.WriteLine("***************** DONE *******************");
+            Console.WriteLine("***************** DONE *******************");
+            Console.WriteLine("***************** DONE *******************");
+            Console.WriteLine("***************** DONE *******************");
+            Console.WriteLine("***************** DONE *******************");
+            Console.WriteLine("***************** DONE *******************");
         }
 
         public override void DidReceiveMemoryWarning()
